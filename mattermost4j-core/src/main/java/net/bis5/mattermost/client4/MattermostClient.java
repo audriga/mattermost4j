@@ -176,9 +176,8 @@ import net.bis5.opengraph.models.OpenGraph;
  */
 public class MattermostClient implements AutoCloseable, AuditsApi, AuthenticationApi, BotsApi,
     BrandApi, ChannelApi, ClusterApi, CommandsApi, ComplianceApi, ElasticsearchApi, EmojiApi,
-    FilesApi, SystemApi, LdapApi, LogsApi, OAuthApi, OpenGraphApi, PluginApi, PostApi,
-    PreferencesApi, ReactionApi, SamlApi, StatusApi, TeamApi, UserApi, WebhookApi {
     ExportApi, FilesApi, SystemApi, LdapApi, LogsApi, OAuthApi, OpenGraphApi, PluginApi, PostApi,
+    PreferencesApi, ReactionApi, SamlApi, StatusApi, TeamApi, UsageApi, UserApi, WebhookApi {
 
   protected static final String API_URL_SUFFIX = "/api/v4";
   private final String url;
@@ -2169,6 +2168,19 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
     return doApiPost(String.format("%s/assign/%s", getBotsRoute(botUserId), ownerUserId), null,
         Bot.class);
   }
+
+  // Usage section
+
+    @Override
+    public ApiResponse<UsagePosts> getPostsUsage() {
+        return doApiGet(getPostsUsageRoute(),null, UsagePosts.class);
+    }
+
+    @Override
+    public ApiResponse<UsageStorage> getStorageUsage() {
+        return doApiGet(getStorageUsageRoute(),null, UsageStorage.class);
+    }
+
     // Export section
 
     @Override
