@@ -52,6 +52,7 @@ import net.bis5.mattermost.client4.api.CommandsApi;
 import net.bis5.mattermost.client4.api.ComplianceApi;
 import net.bis5.mattermost.client4.api.ElasticsearchApi;
 import net.bis5.mattermost.client4.api.EmojiApi;
+import net.bis5.mattermost.client4.api.ExportApi;
 import net.bis5.mattermost.client4.api.FilesApi;
 import net.bis5.mattermost.client4.api.LdapApi;
 import net.bis5.mattermost.client4.api.LogsApi;
@@ -121,6 +122,7 @@ import net.bis5.mattermost.model.Compliances;
 import net.bis5.mattermost.model.Config;
 import net.bis5.mattermost.model.Emoji;
 import net.bis5.mattermost.model.EmojiList;
+import net.bis5.mattermost.model.Export;
 import net.bis5.mattermost.model.FileInfo;
 import net.bis5.mattermost.model.IncomingWebhook;
 import net.bis5.mattermost.model.IncomingWebhookList;
@@ -176,6 +178,7 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
     BrandApi, ChannelApi, ClusterApi, CommandsApi, ComplianceApi, ElasticsearchApi, EmojiApi,
     FilesApi, SystemApi, LdapApi, LogsApi, OAuthApi, OpenGraphApi, PluginApi, PostApi,
     PreferencesApi, ReactionApi, SamlApi, StatusApi, TeamApi, UserApi, WebhookApi {
+    ExportApi, FilesApi, SystemApi, LdapApi, LogsApi, OAuthApi, OpenGraphApi, PluginApi, PostApi,
 
   protected static final String API_URL_SUFFIX = "/api/v4";
   private final String url;
@@ -2166,5 +2169,11 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
     return doApiPost(String.format("%s/assign/%s", getBotsRoute(botUserId), ownerUserId), null,
         Bot.class);
   }
+    // Export section
+
+    @Override
+    public ApiResponse<Export> ListExports() {
+        return doApiGet(getExportRoute(),null,Export.class);
+    }
 
 }
