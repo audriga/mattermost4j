@@ -66,6 +66,7 @@ import net.bis5.mattermost.client4.api.SamlApi;
 import net.bis5.mattermost.client4.api.StatusApi;
 import net.bis5.mattermost.client4.api.SystemApi;
 import net.bis5.mattermost.client4.api.TeamApi;
+import net.bis5.mattermost.client4.api.UsageApi;
 import net.bis5.mattermost.client4.api.UserApi;
 import net.bis5.mattermost.client4.api.WebhookApi;
 import net.bis5.mattermost.client4.factory.MattermostClientFactory;
