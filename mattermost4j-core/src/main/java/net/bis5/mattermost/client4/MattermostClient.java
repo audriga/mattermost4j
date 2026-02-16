@@ -2189,7 +2189,7 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
         Bot.class);
   }
 
-  // Usage section
+  // Usage Section
 
     @Override
     public ApiResponse<UsagePosts> getPostsUsage() {
@@ -2201,11 +2201,16 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
         return doApiGet(getStorageUsageRoute(),null, UsageStorage.class);
     }
 
-    // Export section
+    // Export Section
 
     @Override
-    public ApiResponse<Export> ListExports() {
+    public ApiResponse<Export> listExports() {
         return doApiGet(getExportRoute(),null,Export.class);
     }
+
+    // Job Section
+
+    // TODO
+
 
 }
