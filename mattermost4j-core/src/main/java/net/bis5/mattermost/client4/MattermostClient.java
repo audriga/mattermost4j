@@ -158,6 +158,8 @@ import net.bis5.mattermost.model.TeamSearch;
 import net.bis5.mattermost.model.TeamStats;
 import net.bis5.mattermost.model.TeamUnread;
 import net.bis5.mattermost.model.TeamUnreadList;
+import net.bis5.mattermost.model.UsagePosts;
+import net.bis5.mattermost.model.UsageStorage;
 import net.bis5.mattermost.model.User;
 import net.bis5.mattermost.model.UserAccessToken;
 import net.bis5.mattermost.model.UserAccessTokenList;
@@ -533,7 +535,24 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
     return String.format("%s/%s", getBotsRoute(), StringUtils.stripToEmpty(botUserId));
   }
 
-  protected <T> ApiResponse<T> doApiGet(String url, String etag, Class<T> responseType) {
+  public String getUsageRoute() {
+      return "/usage";
+  }
+
+  public String getPostsUsageRoute() {
+      return getUsageRoute() + "/posts";
+  }
+
+  public String getStorageUsageRoute() {
+      return getUsageRoute() + "/storage";
+  }
+
+  public String getExportRoute() {
+      return "/exports";
+  }
+
+
+    protected <T> ApiResponse<T> doApiGet(String url, String etag, Class<T> responseType) {
     return doApiRequest(HttpMethod.GET, apiUrl + url, null, etag, responseType);
   }
 
