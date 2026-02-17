@@ -944,7 +944,16 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
 
   @Override
   public ApiResponse<UsersStats> getTotalUsersStatsFiltered(UsersStatsFiltered filter) {
-      return doApiGet(getUsersStatsRoute() + "/filtered",null, UsersStats.class);
+      String query = new QueryBuilder()
+              .set("in_team", filter.getInTeam())
+              .set("in_channel", filter.getInChannel())
+              .set("include_bots", filter.isIncludeBots())
+              .set("include_deleted", filter.isIncludeDeleted())
+              .set("roles", filter.getRoles())
+              .set("channel_roles", filter.getChannelRoles())
+              .set("team_roles", filter.getTeamRoles())
+              .toString();
+      return doApiGet(getUsersStatsRoute() + "/filtered" + query,null, UsersStats.class);
   }
 
   // Team Section
