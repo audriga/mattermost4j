@@ -55,6 +55,7 @@ import net.bis5.mattermost.client4.api.ElasticsearchApi;
 import net.bis5.mattermost.client4.api.EmojiApi;
 import net.bis5.mattermost.client4.api.ExportApi;
 import net.bis5.mattermost.client4.api.FilesApi;
+import net.bis5.mattermost.client4.api.JobsApi;
 import net.bis5.mattermost.client4.api.LdapApi;
 import net.bis5.mattermost.client4.api.LogsApi;
 import net.bis5.mattermost.client4.api.OAuthApi;
@@ -102,6 +103,8 @@ import net.bis5.mattermost.model.license.MfaSecret;
 import net.bis5.mattermost.respheader.ContentDisposition;
 import net.bis5.opengraph.models.OpenGraph;
 
+import javax.management.Query;
+
 /**
  * Mattermost API Version4 Client default implementation.
  *
@@ -110,8 +113,8 @@ import net.bis5.opengraph.models.OpenGraph;
  */
 public class MattermostClient implements AutoCloseable, AuditsApi, AuthenticationApi, BotsApi,
     BrandApi, ChannelApi, ClusterApi, CommandsApi, ComplianceApi, ElasticsearchApi, EmojiApi,
-    ExportApi, FilesApi, SystemApi, LdapApi, LogsApi, OAuthApi, OpenGraphApi, PluginApi, PostApi,
-    PreferencesApi, ReactionApi, SamlApi, StatusApi, TeamApi, UsageApi, UserApi, WebhookApi {
+    ExportApi, FilesApi, JobsApi, SystemApi, LdapApi, LogsApi, OAuthApi, OpenGraphApi, PluginApi,
+        PostApi,PreferencesApi, ReactionApi, SamlApi, StatusApi, TeamApi, UsageApi, UserApi, WebhookApi {
 
   protected static final String API_URL_SUFFIX = "/api/v4";
   private final String url;
@@ -485,7 +488,9 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
   public String getExportRoute() {
       return "/exports";
   }
-
+  public String getJobsRoute() {
+      return "/jobs";
+  }
 
     protected <T> ApiResponse<T> doApiGet(String url, String etag, Class<T> responseType) {
     return doApiRequest(HttpMethod.GET, apiUrl + url, null, etag, responseType);
@@ -2164,7 +2169,20 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
 
     // Job Section
 
-    // TODO
+    // missing @param data
+    @Override
+    public ApiResponse<Jobs> createJob(String type) {
+      return doApiPost(getJobsRoute(),type, Jobs.class);}
+
+    @Override
+    public ApiResponse<Jobs> getJob(String jobType, Pager pager, String status) {
+        String query = new QueryBuilder()
+                .set(pager)
+                .set("job_type", jobType)
+                .set("status", status)
+                .toString();
+      return doApiGet(getJobsRoute(),null, Jobs.class);
+    }
 
 
 }
