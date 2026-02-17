@@ -13,4 +13,9 @@ public interface ExportApi {
      * returns a list of available exports.
      */
     ApiResponse<Export> listExports();
+
+    /**
+     * Downloads an export file.
+     */
+    ApiResponse<Export> downloadExport(String exportName);
 }

@@ -2188,7 +2188,7 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
         return doApiPost(getJobsRoute(),type,Jobs.class); }
 
     @Override
-    public ApiResponse<Jobs> getJob(String jobType, Pager pager, String status) {
+    public ApiResponse<Jobs> getJobs(String jobType, Pager pager, String status) {
         String query = new QueryBuilder()
                 .set(pager)
                 .set("job_type", jobType)
