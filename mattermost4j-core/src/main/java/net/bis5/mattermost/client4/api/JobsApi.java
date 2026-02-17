@@ -17,5 +17,5 @@ public interface JobsApi {
     /**
      * Get jobs.
      */
-    ApiResponse<Jobs> getJob(String jobType, Pager pager, String status);
+    ApiResponse<Jobs> getJobs(String jobType, Pager pager, String status);
 }

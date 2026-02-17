@@ -104,8 +104,6 @@ import net.bis5.mattermost.model.license.MfaSecret;
 import net.bis5.mattermost.respheader.ContentDisposition;
 import net.bis5.opengraph.models.OpenGraph;
 
-import javax.management.Query;
-
 /**
  * Mattermost API Version4 Client default implementation.
  *
@@ -492,6 +490,10 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
 
     public String getExportRoute() {
         return "/exports";
+    }
+
+    public String getExportRoute(String exportName) {
+        return String.format("%s/%s", getExportRoute(), StringUtils.stripToEmpty(exportName));
     }
 
     public String getJobsRoute() {
@@ -2178,6 +2180,12 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
     @Override
     public ApiResponse<Export> listExports() {
         return doApiGet(getExportRoute(), null, Export.class);
+    }
+
+    @Override
+    public ApiResponse<Export> downloadExport(String exportName) {
+        String query = new QueryBuilder().set("export_name", exportName).toString();
+        return doApiGet(getExportRoute(exportName)+ query, null, Export.class);
     }
 
     // Job Section
