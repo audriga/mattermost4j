@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import net.bis5.mattermost.model.*;
 import org.apache.commons.lang3.StringUtils;
 
 import jakarta.ws.rs.HttpMethod;
@@ -97,76 +98,6 @@ import net.bis5.mattermost.client4.model.UpdateUserPasswordRequest;
 import net.bis5.mattermost.client4.model.UserAccessTokenCreateRequest;
 import net.bis5.mattermost.client4.model.UsersOrder;
 import net.bis5.mattermost.client4.model.VerifyUserEmailRequest;
-import net.bis5.mattermost.model.AnalyticsRows;
-import net.bis5.mattermost.model.Audits;
-import net.bis5.mattermost.model.AuthorizeRequest;
-import net.bis5.mattermost.model.Bot;
-import net.bis5.mattermost.model.BotPatch;
-import net.bis5.mattermost.model.Bots;
-import net.bis5.mattermost.model.Channel;
-import net.bis5.mattermost.model.ChannelList;
-import net.bis5.mattermost.model.ChannelMember;
-import net.bis5.mattermost.model.ChannelMembers;
-import net.bis5.mattermost.model.ChannelPatch;
-import net.bis5.mattermost.model.ChannelSearch;
-import net.bis5.mattermost.model.ChannelStats;
-import net.bis5.mattermost.model.ChannelUnread;
-import net.bis5.mattermost.model.ChannelView;
-import net.bis5.mattermost.model.ChannelViewResponse;
-import net.bis5.mattermost.model.ClusterInfo;
-import net.bis5.mattermost.model.Command;
-import net.bis5.mattermost.model.CommandArgs;
-import net.bis5.mattermost.model.CommandList;
-import net.bis5.mattermost.model.CommandResponse;
-import net.bis5.mattermost.model.Compliance;
-import net.bis5.mattermost.model.Compliances;
-import net.bis5.mattermost.model.Config;
-import net.bis5.mattermost.model.Emoji;
-import net.bis5.mattermost.model.EmojiList;
-import net.bis5.mattermost.model.Export;
-import net.bis5.mattermost.model.FileInfo;
-import net.bis5.mattermost.model.IncomingWebhook;
-import net.bis5.mattermost.model.IncomingWebhookList;
-import net.bis5.mattermost.model.OAuthApp;
-import net.bis5.mattermost.model.OutgoingWebhook;
-import net.bis5.mattermost.model.OutgoingWebhookList;
-import net.bis5.mattermost.model.PluginManifest;
-import net.bis5.mattermost.model.Plugins;
-import net.bis5.mattermost.model.Post;
-import net.bis5.mattermost.model.PostList;
-import net.bis5.mattermost.model.PostPatch;
-import net.bis5.mattermost.model.PostSearchResults;
-import net.bis5.mattermost.model.Preference;
-import net.bis5.mattermost.model.PreferenceCategory;
-import net.bis5.mattermost.model.Preferences;
-import net.bis5.mattermost.model.Reaction;
-import net.bis5.mattermost.model.ReactionList;
-import net.bis5.mattermost.model.Role;
-import net.bis5.mattermost.model.SamlCertificateStatus;
-import net.bis5.mattermost.model.SessionList;
-import net.bis5.mattermost.model.Status;
-import net.bis5.mattermost.model.StatusList;
-import net.bis5.mattermost.model.SwitchRequest;
-import net.bis5.mattermost.model.Team;
-import net.bis5.mattermost.model.TeamExists;
-import net.bis5.mattermost.model.TeamInviteInfo;
-import net.bis5.mattermost.model.TeamList;
-import net.bis5.mattermost.model.TeamMember;
-import net.bis5.mattermost.model.TeamMemberList;
-import net.bis5.mattermost.model.TeamPatch;
-import net.bis5.mattermost.model.TeamSearch;
-import net.bis5.mattermost.model.TeamStats;
-import net.bis5.mattermost.model.TeamUnread;
-import net.bis5.mattermost.model.TeamUnreadList;
-import net.bis5.mattermost.model.UsagePosts;
-import net.bis5.mattermost.model.UsageStorage;
-import net.bis5.mattermost.model.User;
-import net.bis5.mattermost.model.UserAccessToken;
-import net.bis5.mattermost.model.UserAccessTokenList;
-import net.bis5.mattermost.model.UserAutocomplete;
-import net.bis5.mattermost.model.UserList;
-import net.bis5.mattermost.model.UserPatch;
-import net.bis5.mattermost.model.UserSearch;
 import net.bis5.mattermost.model.license.MfaSecret;
 import net.bis5.mattermost.respheader.ContentDisposition;
 import net.bis5.opengraph.models.OpenGraph;
@@ -309,6 +240,10 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
 
   public String getUserTokenRoute(String tokenId) {
     return getUserTokensRoute() + String.format("/%s", StringUtils.stripToEmpty(tokenId));
+  }
+
+  public String getUsersStatsRoute() {
+      return getUsersRoute() + "/stats";
   }
 
   public String getTeamsRoute() {
@@ -1000,6 +935,16 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
   @Override
   public ApiResponse<Boolean> deleteProfileImage(String userId) {
     return doApiDelete(getUserProfileImageRoute(userId)).checkStatusOk();
+  }
+
+  @Override
+  public ApiResponse<UsersStats> getTotalUsersStats() {
+      return doApiGet(getUsersStatsRoute(),null, UsersStats.class);
+  }
+
+  @Override
+  public ApiResponse<UsersStats> getTotalUsersStatsFiltered(UsersStatsFiltered filter) {
+      return doApiGet(getUsersStatsRoute() + "/filtered",null, UsersStats.class);
   }
 
   // Team Section

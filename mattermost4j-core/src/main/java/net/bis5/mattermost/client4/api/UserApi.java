@@ -32,6 +32,8 @@ import net.bis5.mattermost.model.UserAutocomplete;
 import net.bis5.mattermost.model.UserList;
 import net.bis5.mattermost.model.UserPatch;
 import net.bis5.mattermost.model.UserSearch;
+import net.bis5.mattermost.model.UsersStats;
+import net.bis5.mattermost.model.UsersStatsFiltered;
 import net.bis5.mattermost.model.license.MfaSecret;
 
 /**
@@ -503,4 +505,7 @@ public interface UserApi {
    */
   ApiResponse<Boolean> deleteProfileImage(String userId);
 
+  ApiResponse<UsersStats> getTotalUsersStats();
+
+  ApiResponse<UsersStats> getTotalUsersStatsFiltered(UsersStatsFiltered filter);
 }
