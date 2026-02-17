@@ -12,5 +12,5 @@ public interface ExportApi {
     /**
      * returns a list of available exports.
      */
-    ApiResponse<Export> ListExports();
+    ApiResponse<Export> listExports();
 }
