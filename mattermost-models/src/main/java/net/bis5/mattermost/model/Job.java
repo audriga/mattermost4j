@@ -1,10 +1,14 @@
 package net.bis5.mattermost.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Data;
 
+import java.util.Map;
+
 @Data
-public class Jobs {
+@Builder
+public class Job {
     private String id;
     private String type;
     @JsonProperty("create_at")
@@ -15,5 +19,5 @@ public class Jobs {
     private long lastActivityAt;
     private String status;
     private long progress;
-    // TODO @param data
+    private Map<String, String> data;
 }

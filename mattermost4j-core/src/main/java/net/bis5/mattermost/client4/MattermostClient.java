@@ -56,7 +56,7 @@ import net.bis5.mattermost.client4.api.EmojiApi;
 import net.bis5.mattermost.client4.api.ExportApi;
 import net.bis5.mattermost.client4.api.FilesApi;
 import net.bis5.mattermost.client4.api.ImportApi;
-import net.bis5.mattermost.client4.api.JobsApi;
+import net.bis5.mattermost.client4.api.JobApi;
 import net.bis5.mattermost.client4.api.LdapApi;
 import net.bis5.mattermost.client4.api.LogsApi;
 import net.bis5.mattermost.client4.api.OAuthApi;
@@ -112,7 +112,7 @@ import net.bis5.opengraph.models.OpenGraph;
  */
 public class MattermostClient implements AutoCloseable, AuditsApi, AuthenticationApi, BotsApi,
         BrandApi, ChannelApi, ClusterApi, CommandsApi, ComplianceApi, ElasticsearchApi, EmojiApi,
-        ExportApi, FilesApi, ImportApi, JobsApi, SystemApi, LdapApi, LogsApi, OAuthApi, OpenGraphApi,
+        ExportApi, FilesApi, ImportApi, JobApi, SystemApi, LdapApi, LogsApi, OAuthApi, OpenGraphApi,
         PluginApi, PostApi,PreferencesApi, ReactionApi, SamlApi, StatusApi, TeamApi, UsageApi, UserApi,
         WebhookApi {
 
@@ -2190,19 +2190,22 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
 
     // Job Section
 
-    // missing @param data
     @Override
-    public ApiResponse<Jobs> createJob(String type) {
-        return doApiPost(getJobsRoute(),type,Jobs.class); }
+    public ApiResponse<Job> createJob(String type, Map<String,String> data) {
+        Job request = Job.builder()
+                .type(type)
+                .data(data)
+                .build();
+        return doApiPost(getJobsRoute(),request, Job.class); }
 
     @Override
-    public ApiResponse<Jobs> getJobs(String jobType, Pager pager, String status) {
+    public ApiResponse<Job> getJobs(String jobType, Pager pager, String status) {
         String query = new QueryBuilder()
                 .set(pager)
                 .set("job_type", jobType)
                 .set("status", status)
                 .toString();
-        return doApiGet(getJobsRoute(), null, Jobs.class);
+        return doApiGet(getJobsRoute() + query, null, Job.class);
     }
 
     // Imports Section
