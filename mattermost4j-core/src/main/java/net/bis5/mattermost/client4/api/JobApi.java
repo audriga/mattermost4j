@@ -3,6 +3,7 @@ package net.bis5.mattermost.client4.api;
 import net.bis5.mattermost.client4.ApiResponse;
 import net.bis5.mattermost.client4.Pager;
 import net.bis5.mattermost.model.Job;
+import net.bis5.mattermost.model.Jobs;
 
 import java.util.Map;
 
@@ -19,5 +20,5 @@ public interface JobApi {
     /**
      * Get jobs.
      */
-    ApiResponse<Job> getJobs(String jobType, Pager pager, String status);
+    ApiResponse<Jobs> getJobs(String jobType, Pager pager, String status);
 }
