@@ -2189,7 +2189,16 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
 
     @Override
     public ApiResponse<Path> downloadExport(String exportName) throws IOException {
-        return doApiGetFile(getExportRoute(exportName), null);
+        ApiResponse<InputStream> response = doApiGet(getExportRoute(exportName), null, InputStream.class);
+
+        if (response.hasError()) {
+            return ApiResponse.of(response.getRawResponse(), Path.class);
+        }
+
+        Path file = Files.createTempFile(exportName, );
+        Files.copy(response.readEntity(), file, StandardCopyOption.REPLACE_EXISTING);
+
+        return ApiResponse.of(response.getRawResponse(), file);
     }
 
     // Job Section
@@ -2215,7 +2224,7 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
     // Imports Section
 
     @Override
-    public ApiResponse<ImportList> listImports() throws IOException{
-        return doApiGet(getImportsRoute(), null, ImportList.class);
+    public ApiResponse<List<String>> listImports() {
+        return doApiGet(getImportsRoute(), null, new GenericType<List<String>>() {});
     }
 }

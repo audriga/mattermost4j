@@ -1,26 +1,17 @@
 package net.bis5.mattermost.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Data;
-import java.util.List;
+import lombok.NoArgsConstructor;
+import java.util.ArrayList;
 
 /**
  * List of imported files.
  *
  */
 @Data
-public class ImportList {
-        private final List<String> files;
+@NoArgsConstructor
+public class ImportList extends ArrayList<String> {
 
-        @JsonCreator
-        public ImportList(List<String> files) {
-            this.files = files;
-        }
-
-        @JsonValue
-        public List<String> getFiles() {
-            return files;
-        }
+    private static final long serialVersionUID = 1L;
 }
 
