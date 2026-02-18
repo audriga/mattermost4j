@@ -6,6 +6,10 @@ import lombok.Data;
 
 import java.util.Map;
 
+/**
+ * Job.
+ *
+ */
 @Data
 @Builder
 public class Job {

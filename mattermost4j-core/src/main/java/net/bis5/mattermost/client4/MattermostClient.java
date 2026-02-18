@@ -2196,7 +2196,7 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
 
     @Override
     public ApiResponse<Job> createJob(String type, Map<String,String> data) {
-        Job request = Job.builder()
+        JobRequest request = JobRequest.builder()
                 .type(type)
                 .data(data)
                 .build();
