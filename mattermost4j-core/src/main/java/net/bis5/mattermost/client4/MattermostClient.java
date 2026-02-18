@@ -493,7 +493,12 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
     }
 
     public String getExportRoute(String exportName) {
-        return String.format("%s/%s", getExportRoute(), StringUtils.stripToEmpty(exportName));
+        String base = getExportRoute();
+        if (StringUtils.isBlank(exportName)) {
+            return base;
+        }
+        String name = exportName.startsWith("/") ? exportName.substring(1) : exportName;
+        return base + "/" + name;
     }
 
     public String getJobsRoute() {
