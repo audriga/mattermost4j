@@ -22,5 +22,5 @@ public class ImportList {
         public List<String> getFiles() {
             return files;
         }
-    }
 }
+
