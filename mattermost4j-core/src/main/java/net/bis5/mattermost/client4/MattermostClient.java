@@ -2023,6 +2023,9 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
         } else {
             String contentDispositionHeader =
                     String.class.cast(response.getHeaders().getFirst("Content-Disposition"));
+            if(contentDispositionHeader == null) {
+                return ".zip";
+            }
             return detectSuffix(contentDispositionHeader);
         }
     }
@@ -2189,16 +2192,7 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
 
     @Override
     public ApiResponse<Path> downloadExport(String exportName) throws IOException {
-        ApiResponse<InputStream> response = doApiGet(getExportRoute(exportName), null, InputStream.class);
-
-        if (response.hasError()) {
-            return ApiResponse.of(response.getRawResponse(), Path.class);
-        }
-
-        Path file = Files.createTempFile(exportName, );
-        Files.copy(response.readEntity(), file, StandardCopyOption.REPLACE_EXISTING);
-
-        return ApiResponse.of(response.getRawResponse(), file);
+        return doApiGetFile(getExportRoute(exportName), null);
     }
 
     // Job Section
