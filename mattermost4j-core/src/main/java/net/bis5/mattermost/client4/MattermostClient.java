@@ -2183,9 +2183,8 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
     }
 
     @Override
-    public ApiResponse<Export> downloadExport(String exportName) {
-        String query = new QueryBuilder().set("export_name", exportName).toString();
-        return doApiGet(getExportRoute(exportName)+ query, null, Export.class);
+    public ApiResponse<Path> downloadExport(String exportName) throws IOException {
+        return doApiGetFile(getExportRoute(exportName), null);
     }
 
     // Job Section

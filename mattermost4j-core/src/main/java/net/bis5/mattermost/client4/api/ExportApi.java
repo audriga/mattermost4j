@@ -4,6 +4,9 @@ import net.bis5.mattermost.client4.ApiResponse;
 import net.bis5.mattermost.model.Export;
 import net.bis5.mattermost.model.ExportList;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
 /**
  * Export API.
  *
@@ -18,5 +21,5 @@ public interface ExportApi {
     /**
      * Downloads an export file.
      */
-    ApiResponse<Export> downloadExport(String exportName);
+    ApiResponse<Path> downloadExport(String exportName) throws IOException;
 }
