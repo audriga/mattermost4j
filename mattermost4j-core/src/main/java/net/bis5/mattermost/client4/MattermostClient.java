@@ -2210,7 +2210,7 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
     // Imports Section
 
     @Override
-    public ApiResponse<ImportFiles> listImports() {
-        return doApiGet(getImportsRoute(),null, ImportFiles.class);
+    public ApiResponse<ImportList> listImports() throws IOException{
+        return doApiGet(getImportsRoute(), null, ImportList.class);
     }
 }
