@@ -114,7 +114,7 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
         BrandApi, ChannelApi, ClusterApi, CommandsApi, ComplianceApi, ElasticsearchApi, EmojiApi,
         ExportApi, FilesApi, ImportApi, JobApi, SystemApi, LdapApi, LogsApi, OAuthApi, OpenGraphApi,
         PluginApi, PostApi,PreferencesApi, ReactionApi, SamlApi, StatusApi, TeamApi, UsageApi, UserApi,
-        WebhookApi {
+        UploadApi, WebhookApi {
 
     protected static final String API_URL_SUFFIX = "/api/v4";
     private final String url;
@@ -508,6 +508,8 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
     public String getImportsRoute() {
         return "/import";
     }
+
+    public String getUploadRoute() { return "/uploads"; }
 
     protected <T> ApiResponse<T> doApiGet(String url, String etag, Class<T> responseType) {
         return doApiRequest(HttpMethod.GET, apiUrl + url, null, etag, responseType);
@@ -2199,11 +2201,11 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
 
     @Override
     public ApiResponse<Job> createJob(String type, Map<String,String> data) {
-        JobRequest request = JobRequest.builder()
+        JobRequest body = JobRequest.builder()
                 .type(type)
                 .data(data)
                 .build();
-        return doApiPost(getJobsRoute(),request, Job.class); }
+        return doApiPost(getJobsRoute(),body, Job.class); }
 
     @Override
     public ApiResponse<Jobs> getJobs(String jobType, Pager pager, String status) {
@@ -2220,5 +2222,17 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
     @Override
     public ApiResponse<ImportList> listImports() {
         return doApiGet(getImportsRoute(), null, ImportList.class);
+    }
+
+    // Upload Section
+
+    @Override
+    public ApiResponse<UploadCreateResponse> createUploadSession(String fileName, String type, long fileSize) {
+        UploadCreate body = UploadCreate.builder()
+                .fileName(fileName)
+                .type(type)
+                .fileSize(fileSize)
+                .build();
+        return doApiPost(getUploadRoute(),body, UploadCreateResponse.class);
     }
 }
