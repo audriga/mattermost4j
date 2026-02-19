@@ -1,7 +1,7 @@
 package net.bis5.mattermost.client4.api;
 
 import net.bis5.mattermost.client4.ApiResponse;
-import java.util.List;
+import net.bis5.mattermost.model.ImportList;
 
 /**
  * Import API.
@@ -11,5 +11,5 @@ public interface ImportApi {
     /**
      * Lists all available import files.
      */
-    ApiResponse<List<String>> listImports();
+    ApiResponse<ImportList> listImports();
 }
