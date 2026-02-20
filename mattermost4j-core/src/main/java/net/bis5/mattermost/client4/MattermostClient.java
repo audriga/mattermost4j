@@ -512,6 +512,10 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
 
     public String getUploadRoute() { return "/uploads"; }
 
+    public String getUploadRoute(String uploadId) {
+        return String.format("%s/%s", getUploadRoute(), StringUtils.stripToEmpty(uploadId));
+    }
+
     protected <T> ApiResponse<T> doApiGet(String url, String etag, Class<T> responseType) {
         return doApiRequest(HttpMethod.GET, apiUrl + url, null, etag, responseType);
     }
@@ -599,6 +603,22 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
 
     protected static final String HEADER_ETAG_CLIENT = "If-None-Match";
     public static final String HEADER_AUTH = "Authorization";
+    public static final String HEADER_TYPE = "Content-Type";
+    public static final String HEADER_LENGTH = "Content-Length";
+
+    protected <T> ApiResponse<T> doApiPostBinary(String url, InputStream data, long contentLength,
+            Class<T> responseType) {
+
+        Response response = httpClient
+                .target(url)
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .header(HEADER_AUTH, getAuthority())
+                .header(HEADER_TYPE, MediaType.APPLICATION_OCTET_STREAM)
+                .header(HEADER_LENGTH, contentLength)
+                .post(Entity.entity(data, MediaType.APPLICATION_OCTET_STREAM_TYPE));
+
+        return ApiResponse.of(response, responseType);
+    }
 
     // Authentication Section
 
@@ -2235,5 +2255,10 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
                 .fileSize(fileSize)
                 .build();
         return doApiPost(getUploadRoute(),body, UploadCreateResponse.class);
+    }
+
+    @Override
+    public ApiResponse<UploadFiletoSessionResponse> uploadFileToSession(String uploadId, long contentLength, InputStream file) {
+        return doApiPostBinary(apiUrl + getUploadRoute(uploadId),file, contentLength, UploadFiletoSessionResponse.class);
     }
 }
