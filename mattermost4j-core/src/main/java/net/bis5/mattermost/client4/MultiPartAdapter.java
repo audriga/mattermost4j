@@ -61,7 +61,7 @@ public interface MultiPartAdapter {
   public static class FileBodyPart implements Part {
     private final String name;
     private final InputStream stream;
-    private final String fileName;++
+    private final String fileName;
   }
 
   @RequiredArgsConstructor
