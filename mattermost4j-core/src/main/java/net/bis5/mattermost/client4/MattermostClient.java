@@ -609,15 +609,11 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
     protected <T> ApiResponse<T> doApiPostBinary(String url, InputStream data, long contentLength,
             Class<T> responseType) {
 
-        Response response = httpClient
-                .target(url)
-                .request(MediaType.APPLICATION_JSON_TYPE)
+        return ApiResponse.of(httpClient.target(url).request(MediaType.APPLICATION_JSON_TYPE)
                 .header(HEADER_AUTH, getAuthority())
                 .header(HEADER_TYPE, MediaType.APPLICATION_OCTET_STREAM)
                 .header(HEADER_LENGTH, contentLength)
-                .post(Entity.entity(data, MediaType.APPLICATION_OCTET_STREAM_TYPE));
-
-        return ApiResponse.of(response, responseType);
+                .post(Entity.entity(data, MediaType.APPLICATION_OCTET_STREAM_TYPE)), responseType);
     }
 
     // Authentication Section
