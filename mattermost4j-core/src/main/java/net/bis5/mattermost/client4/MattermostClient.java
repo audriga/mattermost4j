@@ -507,7 +507,7 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
     }
 
     public String getImportsRoute() {
-        return "/import";
+        return "/imports";
     }
 
     public String getUploadRoute() { return "/uploads"; }
