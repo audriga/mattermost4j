@@ -8,7 +8,7 @@ import lombok.Data;
  *
  */
 @Data
-public class UploadFiletoSessionResponse {
+public class UploadFileResponse {
     private String id;
     @JsonProperty("user_id")
     private String userId;

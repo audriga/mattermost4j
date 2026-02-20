@@ -2254,7 +2254,7 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
     }
 
     @Override
-    public ApiResponse<UploadFiletoSessionResponse> uploadFileToSession(String uploadId, long contentLength, InputStream file) {
-        return doApiPostBinary(apiUrl + getUploadRoute(uploadId),file, contentLength, UploadFiletoSessionResponse.class);
+    public ApiResponse<UploadFileResponse> uploadToSession(String uploadId, long contentLength, InputStream file) {
+        return doApiPostBinary(apiUrl + getUploadRoute(uploadId),file, contentLength, UploadFileResponse.class);
     }
 }
