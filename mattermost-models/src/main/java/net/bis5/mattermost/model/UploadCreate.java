@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UploadCreate {
     private String type;
+    @JsonProperty("filename")
     private String fileName;
     @JsonProperty("file_size")
     private long fileSize;
