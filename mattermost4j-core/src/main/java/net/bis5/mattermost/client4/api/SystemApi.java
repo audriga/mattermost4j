@@ -21,6 +21,7 @@ import net.bis5.mattermost.client4.ApiResponse;
 import net.bis5.mattermost.client4.model.AnalyticsCategory;
 import net.bis5.mattermost.model.AnalyticsRows;
 import net.bis5.mattermost.model.Config;
+import net.bis5.mattermost.model.ServerLimits;
 
 /**
  * System API.
@@ -110,4 +111,8 @@ public interface SystemApi {
 
   ApiResponse<Boolean> removeLicense();
 
+  /**
+   * Gets the server limits for the server.
+   */
+  ApiResponse<ServerLimits> getServerLimits();
 }

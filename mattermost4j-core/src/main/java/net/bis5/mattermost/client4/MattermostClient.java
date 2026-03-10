@@ -1643,6 +1643,11 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
         return doApiDelete("/license").checkStatusOk();
     }
 
+    @Override
+    public ApiResponse<ServerLimits> getServerLimits() {
+        return doApiGet("/limits/server", null, ServerLimits.class);
+    }
+
     // Webhooks Section
 
     @Override
