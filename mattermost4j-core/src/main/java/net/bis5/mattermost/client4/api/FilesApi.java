@@ -15,6 +15,7 @@
 package net.bis5.mattermost.client4.api;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import net.bis5.mattermost.client4.ApiResponse;
 import net.bis5.mattermost.client4.model.FileUploadResult;
@@ -72,5 +73,12 @@ public interface FilesApi {
    * @param fileId the file id to get metadata
    */
   ApiResponse<FileInfo> getFileMetadata(String fileId);
+
+  /**
+   * Get a file stream.
+   *
+   * @param fileId the file id to get metadata
+   */
+  ApiResponse<InputStream> getFileStream(String fileId);
 
 }

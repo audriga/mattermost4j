@@ -601,6 +601,10 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
         return ApiResponse.of(fileResponse.getRawResponse(), imageFile);
     }
 
+    protected ApiResponse<InputStream> doApiGetInputStream(String url, String etag) {
+        return doApiGet(url, etag, InputStream.class);
+    }
+
     protected static final String HEADER_ETAG_CLIENT = "If-None-Match";
     public static final String HEADER_AUTH = "Authorization";
     public static final String HEADER_TYPE = "Content-Type";
@@ -1521,6 +1525,11 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
     @Override
     public ApiResponse<Path> getFile(String fileId) throws IOException {
         return doApiGetFile(getFileRoute(fileId), null);
+    }
+
+    @Override
+    public ApiResponse<InputStream> getFileStream(String fileId) {
+        return doApiGetInputStream(getFileRoute(fileId), null);
     }
 
     @Override
