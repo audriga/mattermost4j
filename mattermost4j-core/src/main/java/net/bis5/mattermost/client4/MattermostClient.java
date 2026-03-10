@@ -1377,6 +1377,11 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
         return doApiGet(getChannelsForUserRoute(userId), null, ChannelList.class);
     }
 
+    @Override
+    public ApiResponse<ChannelList> getChannelsForUser(String userId, Pager pager) {
+        return doApiGet(getChannelsForUserRoute(userId) + pager.toQuery(), null, ChannelList.class);
+    }
+
     // Post Section
 
     @Override

@@ -313,6 +313,9 @@ public interface ChannelApi {
   /**
    * returns all channels from all teams that a user is a member of.
    */
-  ApiResponse<ChannelList> getChannelsForUser(String userId);
+  default ApiResponse<ChannelList> getChannelsForUser(String userId) {
+      return getChannelsForUser(userId, Pager.defaultPager());
+  }
 
+  ApiResponse<ChannelList> getChannelsForUser(String userId, Pager pager);
 }
