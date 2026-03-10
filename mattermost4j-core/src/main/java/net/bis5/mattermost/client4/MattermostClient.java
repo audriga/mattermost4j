@@ -325,6 +325,10 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
                 + String.format("/%s", StringUtils.stripToEmpty(userId));
     }
 
+    public String getChannelsForUserRoute(String userId) {
+        return getUserRoute(userId) + "/channels";
+    }
+
     public String getPostsRoute() {
         return "/posts";
     }
@@ -1366,6 +1370,11 @@ public class MattermostClient implements AutoCloseable, AuditsApi, Authenticatio
     @Override
     public ApiResponse<ChannelList> autocompleteChannelsForSearch(String teamId, String searchTerm) {
         return doApiGet(getChannelsForTeamRoute(teamId) + "/search_autocomplete" + "?name=" + searchTerm, null, ChannelList.class);
+    }
+
+    @Override
+    public ApiResponse<ChannelList> getChannelsForUser(String userId) {
+        return doApiGet(getChannelsForUserRoute(userId), null, ChannelList.class);
     }
 
     // Post Section

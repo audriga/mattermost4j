@@ -310,4 +310,9 @@ public interface ChannelApi {
    */
   ApiResponse<ChannelList> autocompleteChannelsForSearch(String teamId, String searchTerm);
 
+  /**
+   * returns all channels from all teams that a user is a member of.
+   */
+  ApiResponse<ChannelList> getChannelsForUser(String userId);
+
 }
